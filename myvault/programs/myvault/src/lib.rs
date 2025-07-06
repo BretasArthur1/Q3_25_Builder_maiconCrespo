@@ -20,7 +20,13 @@ pub mod myvault {
     pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
         ctx.accounts.withdraw(amount)
     }
+
+    pub fn close(ctx: Context<Close>) -> Result<()> {
+        ctx.accounts.close()
+    }
 }
+
+//INITIALIZED
 
 #[derive(Accounts)]
 pub struct Initialize<'info> {
@@ -53,6 +59,8 @@ impl<'info> Initialize<'info> {
     }
 }
 
+//DEPOSIT
+//
 #[derive(Accounts)]
 pub struct Deposit<'info> {
     #[account(mut)]
@@ -88,7 +96,7 @@ impl<'info> Deposit<'info> {
         Ok(())
     }
 }
-
+//WITHDRAW
 #[derive(Accounts)]
 pub struct Withdraw<'info> {
     #[account(mut)]
@@ -129,6 +137,49 @@ impl<'info> Withdraw<'info> {
     }
 }
 
+//CLOSE
+#[derive(Accounts)]
+pub struct Close<'info> {
+    #[account(mut)]
+    pub signer: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [b"vault",vault_state.key().as_ref()],
+        bump = vault_state.vault_bump,
+
+    )]
+    pub vault: SystemAccount<'info>,
+
+    #[account(
+        mut,
+        seeds = [b"state",signer.key().as_ref()],
+        bump = vault_state.state_bump,
+        close = signer,
+    )]
+    pub vault_state: Account<'info, VaultState>,
+    pub system_program: Program<'info, System>,
+}
+
+impl<'info> Close<'info> {
+    pub fn close(&mut self) -> Result<()> {
+        let cpi_program = self.system_program.to_account_info();
+
+        let cpi_account = Transfer {
+            to: self.signer.to_account_info(),
+            from: self.vault.to_account_info(),
+        };
+        let pda_seeds = [
+            b"vault",
+            self.vault_state.to_account_info().key.as_ref(),
+            &[self.vault_state.vault_bump],
+        ];
+        let seeds = [&pda_seeds[..]];
+        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_account, &seeds);
+
+        transfer(cpi_ctx, self.vault.lamports())
+    }
+}
 #[account]
 pub struct VaultState {
     pub vault_bump: u8,
