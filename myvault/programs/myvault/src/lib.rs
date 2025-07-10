@@ -125,13 +125,13 @@ impl<'info> Withdraw<'info> {
             to: self.signer.to_account_info(),
             from: self.vault.to_account_info(),
         };
-        let pda_seeds = [
+        let pda_seeds = &[
             b"vault",
             self.vault_state.to_account_info().key.as_ref(),
             &[self.vault_state.vault_bump],
         ];
-        let seeds = [&pda_seeds[..]];
-        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_account, &seeds);
+        let seeds = &[&pda_seeds[..]];
+        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_account, seeds);
 
         transfer(cpi_ctx, amount)
     }
