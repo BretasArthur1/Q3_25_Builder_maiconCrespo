@@ -13,7 +13,7 @@ url = "https://api.apr.dev"
 
 [provider]
 cluster = "localnet"
-wallet = "../Turbin3-wallet.json"
+wallet = "~/.config/solana/id.json"
 
 
 [scripts]
