@@ -14,7 +14,7 @@ fn test_vault_operations() {
 
     // Create a payer (simulates the user wallet)
     let payer = Keypair::new();
-    svm.airdrop(&payer.pubkey(), 10_000_000_000); // Airdrop 10 SOL for testing
+    svm.airdrop(&payer.pubkey(), 5_000_000_000); // Airdrop 5 SOL for testing
 
     // Derive PDAs for vaultState and vault (equivalent to findProgramAddressSync in JS)
     let vault_state =
