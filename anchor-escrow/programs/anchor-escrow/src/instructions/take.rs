@@ -87,7 +87,7 @@ impl<'info> Take<'info> {
 
         let cpi_ctx = CpiContext::new(self.token_program.to_account_info(), transfer_accounts);
 
-        transfer_checked(cpi_ctx, deposit, self.mint_a.decimals)
+        transfer_checked(cpi_ctx, deposit, self.mint_b.decimals)
     }
     pub fn withdraw_and_close_vault(&mut self) -> Result<()> {
         let signer_seeds: [&[&[u8]]; 1] = [&[
