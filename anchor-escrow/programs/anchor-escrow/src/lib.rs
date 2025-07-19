@@ -14,14 +14,15 @@ declare_id!("ADxxvPiPKT1SeQLDzukVxRwLggTXRXVvUR3eSxLRS6Yi");
 pub mod anchor_escrow {
     use super::*;
 
-    pub fn initialize(ctx: Context<Make>, seed: u64, deposit: u64, receive: u64) -> Result<()> {
+    pub fn make(ctx: Context<Make>, seed: u64, deposit: u64, receive: u64) -> Result<()> {
         ctx.accounts.init_escrow(seed, receive, &ctx.bumps)?;
         ctx.accounts.deposit(deposit)?;
         Ok(())
     }
 
-    pub fn take(ctx: Context<Take>, deposit: u64) -> Result<()> {
-        ctx.accounts.deposit(deposit)?;
+    pub fn take(ctx: Context<Take>,) -> Result<()> {
+        let escrow =&ctx.accounts.escrow;
+        ctx.accounts.deposit(escrow.receive)?;
         ctx.accounts.withdraw_and_close_vault()?;
 
         Ok(())
