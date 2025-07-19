@@ -5,3 +5,8 @@ id.json
 node_modules
 .DS_Store
 .zed
+.anchor
+**/*.rs.bk
+test-ledger
+dist
+.tap
