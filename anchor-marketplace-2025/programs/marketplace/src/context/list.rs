@@ -1,5 +1,8 @@
 use anchor_lang::prelude::*;
-use anchor_spl::{associated_token::AssociatedToken, metadata::{MasterEditionAccount, Metadata, MetadataAccount}, token::{transfer_checked, TransferChecked}, token_interface::{Mint, TokenAccount, TokenInterface}};
+use anchor_spl::{
+    associated_token::AssociatedToken, 
+    metadata::{MasterEditionAccount, Metadata, MetadataAccount},
+    token_interface::{transfer_checked, TransferChecked,Mint, TokenAccount, TokenInterface}};
 
 use crate::state::{Listing, Marketplace};
 
@@ -15,6 +18,7 @@ pub struct List<'info>{
     pub marketplace: Account<'info, Marketplace>, // The marketplace configuration account
 
     pub maker_mint: InterfaceAccount<'info, Mint>, // The NFT mint being listed
+    
     #[account(
         mut,
         associated_token::mint = maker_mint,
@@ -64,7 +68,6 @@ pub struct List<'info>{
         bump,
     )]
     pub master_edition: Account<'info, MasterEditionAccount>, // Master edition to verify it's an NFT
-
     
     pub metadata_program: Program<'info, Metadata>, // Metaplex program
     pub associated_token_program: Program<'info, AssociatedToken>, // For creating ATAs

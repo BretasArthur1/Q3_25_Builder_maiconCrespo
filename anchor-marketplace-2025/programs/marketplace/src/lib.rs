@@ -1,4 +1,4 @@
-#![allow(unexpected_cfgs,deprecated)]
+#![allow(unexpected_cfgs,unused_imports)]
 use anchor_lang::prelude::*;
 
 mod state;
@@ -6,6 +6,9 @@ use state::*;
 
 mod context;
 use context::*;
+
+mod error;
+use error::*;
 
 declare_id!("HYxi42pNZDn3dpnF8HPNeFurSLQSpcYWdvRSkfuqkkui");
 
@@ -25,18 +28,18 @@ pub mod marketplace {
     }
 
     pub fn delist(ctx: Context<Delist>) -> Result<()> {
-        ctx.accounts.delist()?;
-        ctx.accounts.close_mint_vault()?;
+        ctx.accounts.delist_nft()?;
+       
         Ok(())
     }
 
     pub fn purchase(ctx: Context<Purchase>) -> Result<()> {
-        ctx.accounts.send_sol()?;
-        ctx.accounts.receive_nft()?;
-        ctx.accounts.receive_rewards()?;
-        ctx.accounts.close_mint_vault()?;
+        ctx.accounts.pay()?;
+        ctx.accounts.transfer_nft()?;
+       // ctx.accounts.receive_rewards()?;
+       // ctx.accounts.close_mint_vault()?;
         Ok(())
-    }
+   }
 }
 
 
