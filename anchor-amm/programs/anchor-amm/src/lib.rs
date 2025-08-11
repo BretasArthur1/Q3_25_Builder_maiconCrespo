@@ -13,7 +13,7 @@ pub use states::*;
 declare_id!("CCpTvJaqt8P7wJAx9RZLvJvFpHrooSfW8mB2X6qvHpcK");
 
 #[program]
-pub mod amm {
+pub mod anchor_amm {
     use super::*;
 
     pub fn initialize(
@@ -27,6 +27,10 @@ pub mod amm {
 
     pub fn deposit(ctx: Context<Deposit>, amount: u64, max_x: u64, max_y: u64) -> Result<()> {
         ctx.accounts.deposit(amount, max_x, max_y)
+    }
+
+     pub fn withdraw(ctx: Context<Withdraw>, amount: u64, max_x: u64, max_y: u64) -> Result<()> {
+        ctx.accounts.withdraw(amount, max_x, max_y)
     }
 
     pub fn swap(ctx: Context<Swap>, x_to_y: bool, amount_in: u64, slippage: u16) -> Result<()> {

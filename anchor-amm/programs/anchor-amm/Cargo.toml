@@ -20,7 +20,7 @@ test-sbf = []
 
 [dependencies]
 anchor-lang = { version = "0.31.1", features = ["init-if-needed"] }
-anchor-spl = "0.31.1"
+anchor-spl = { version = "0.31.1", features = ["token"]}
 constant-product-curve = { git = "https://github.com/deanmlittle/constant-product-curve.git" }
 
 
@@ -31,3 +31,5 @@ solana-feature-set = "^2.2.1"
 litesvm = "0.6.1"
 spl-token = "8.0.0"
 spl-associated-token-account-client = "2.0.0"
+
+

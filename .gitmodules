@@ -1,3 +1,6 @@
 [submodule "solana-starter"]
 	path = solana-starter
 	url = https://github.com/maiconcrespo/solana-starter.git
+[submodule "tokenized-vaults-program"]
+	path = tokenized-vaults-program
+	url = https://github.com/maiconcrespo/tokenized-vaults-program
