@@ -7,3 +7,6 @@
 [submodule "tokenized-vaults-web"]
 	path = tokenized-vaults-web
 	url = https://github.com/maiconcrespo/tokenized-vaults-web
+[submodule "tokenized-vaults"]
+	path = tokenized-vaults
+	url = https://github.com/maiconcrespo/tokenized-vaults
